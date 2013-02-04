@@ -1,0 +1,20 @@
+﻿void AddUser_GivenNewUser_UserAdded();
+void AddUser_GivenAlreadyExistingUser_ThrowsException();
+void AddUser_GivenNullArgument_ThrowsException();
+
+void DeleteUser_GivenExistingUser_UserDeleted();
+void DeleteUser_GivenNullArgument_ThrowsException();
+void DeleteUser_GivenNonExistantUser_ThrowsException();        
+
+void UpdateUser_GivenExistingUser_UserUpdated();        
+void UpdateUser_GivenNullArgument_ThrowsException();
+void UpdateUser_GivenNonExistantUser_ThrowsException();
+void UpdateUser_UserObjectChangedAfterUpdate_StoredUserNotAffected();
+
+void GetUserById_GivenExistingUserId_ReturnsUser();
+void GetUserById_GivenNegativeId_ThrowsException();
+void GetUserById_GivenNonExistantUserId_ThrowsException();
+
+void GetUserByUsername_GivenExistingUsername_ReturnsUser();
+void GetUserByUsername_GivenNullArgument_ThrowsException();
+void GetUserByUsername_GivenNonExistantUsername_ThrowsException();
