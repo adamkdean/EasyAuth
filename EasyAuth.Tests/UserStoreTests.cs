@@ -33,7 +33,7 @@ namespace EasyAuth.Tests
             var actual = user.Username;
             var expected = username;
 
-            Assert.Equals(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -47,17 +47,31 @@ namespace EasyAuth.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
+        [ExpectedException(typeof(System.ArgumentNullException))]
         public void AddUser_GivenEmptyFirstArgument_ThrowsException()
         {
             userStore.AddUser("", "password");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
+        [ExpectedException(typeof(System.ArgumentNullException))]
         public void AddUser_GivenEmptySecondArgument_ThrowsException()
         {
             userStore.AddUser("username", "");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void AddUser_GivenNullFirstArgument_ThrowsException()
+        {
+            userStore.AddUser(null, "password");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void AddUser_GivenNullSecondArgument_ThrowsException()
+        {
+            userStore.AddUser("username", null);
         }
         #endregion
 
@@ -92,24 +106,6 @@ namespace EasyAuth.Tests
             
             user.Username = newUsername;
             userStore.UpdateUserById(user.UserId, user);
-            var actual = userStore.UserExistsByUsername(newUsername);
-
-            Assert.IsTrue(actual);
-        }
-
-        [TestMethod]
-        public void UpdateUser_UserDataObjectChangedAfterUpdate_StoredUserDataObjectNotAffected()
-        {
-            string username = "testuser", 
-                password = "testpass", 
-                newUsername = "newusername", 
-                bogusUsername = "this_should_not_update_userstore";
-            userStore.AddUser(username, password);
-            UserData user = userStore.GetUserByUsername(username);
-            user.Username = newUsername;
-            userStore.UpdateUserById(user.UserId, user);
-
-            user.Username = bogusUsername;
             var actual = userStore.UserExistsByUsername(newUsername);
 
             Assert.IsTrue(actual);
@@ -151,6 +147,7 @@ namespace EasyAuth.Tests
         #endregion
 
         #region UserExistsById tests
+        [TestMethod]
         public void UserExistsById_GivenExistingUserId_ReturnsTrue()
         {
             userStore.AddUser("user1", "password");            
@@ -161,6 +158,7 @@ namespace EasyAuth.Tests
             Assert.IsTrue(actual);
         }
 
+        [TestMethod]
         public void UserExistsById_GivenNonExistantUserId_ReturnsFalse()
         {
             var actual = userStore.UserExistsById(236);
@@ -170,6 +168,7 @@ namespace EasyAuth.Tests
         #endregion
 
         #region UserExistsByUsername tests
+        [TestMethod]
         public void UserExistsByUsername_GivenExistingUsername_ReturnsTrue()
         {
             userStore.AddUser("user1", "password");
@@ -179,11 +178,19 @@ namespace EasyAuth.Tests
             Assert.IsTrue(actual);
         }
 
+        [TestMethod]
         public void UserExistsByUsername_GivenNonExistantUserId_ReturnsFalse()
         {
             var actual = userStore.UserExistsByUsername("doesnotexist");
 
             Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void UserExistsByUsername_GivenNull_ThrowsException()
+        {
+            userStore.UserExistsByUsername(null);
         }
         #endregion
 
@@ -199,7 +206,7 @@ namespace EasyAuth.Tests
             var expected = username;
             var actual = user.Username;
 
-            Assert.Equals(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -215,6 +222,22 @@ namespace EasyAuth.Tests
         {
             userStore.GetUserById(12);
         }
+
+        [TestMethod]
+        public void GetUserById_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
+        {
+            string username = "user1";
+            userStore.AddUser(username, "password");
+            int userId = userStore.GetUserByUsername(username).UserId;
+
+            UserData userNotUpdated = userStore.GetUserById(userId);
+            userNotUpdated.Username = "bogususername";
+            UserData userOriginal = userStore.GetUserById(userId);
+            var expected = username;
+            var actual = userOriginal.Username;
+
+            Assert.AreEqual(expected, actual);
+        }
         #endregion
 
         #region GetUserByUsername tests
@@ -228,7 +251,7 @@ namespace EasyAuth.Tests
             var expected = username;
             var actual = user.Username;
 
-            Assert.Equals(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -243,6 +266,21 @@ namespace EasyAuth.Tests
         public void GetUserByUsername_GivenNonExistantUsername_ThrowsException()
         {
             userStore.GetUserByUsername("NotAValidUser");
+        }
+
+        [TestMethod]
+        public void GetUserByUsername_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
+        {
+            string username = "user1";
+            userStore.AddUser(username, "password");
+
+            UserData userNotUpdated = userStore.GetUserByUsername(username);
+            userNotUpdated.Username = "bogususername";
+            UserData userOriginal = userStore.GetUserByUsername(username);
+            var expected = username;
+            var actual = userOriginal.Username;
+
+            Assert.AreEqual(expected, actual);
         }
         #endregion
     }

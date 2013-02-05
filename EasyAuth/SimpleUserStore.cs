@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace EasyAuth
@@ -13,38 +14,76 @@ namespace EasyAuth
         }
 
         public void AddUser(string username, string password)
-        {
-            throw new NotImplementedException();
+        {            
+            if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
+            if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
+            if(this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();
+
+            UserData user = new UserData
+            {
+                UserId = users.Count,
+                Username = username,
+                Password = password
+            };
+            users.Add(user);
         }
 
-        public void UpdateUserById(int id, UserData user)
+        public void UpdateUserById(int id, UserData newUserData)
         {
-            throw new NotImplementedException();
+            if (newUserData == null) throw new ArgumentNullException();
+            if (!this.UserExistsById(id)) throw new UserDoesNotExistException();
+            if (id != newUserData.UserId) throw new UserIdDoesNotMatchUserObjectId();
+
+            UserData oldUserData = this.GetActualUserById(id);
+            users.Remove(oldUserData);
+            users.Add(newUserData);
         }
 
         public void DeleteUserById(int id)
-        {
-            throw new NotImplementedException();
+        {            
+            if (!this.UserExistsById(id)) throw new UserDoesNotExistException();
+
+            UserData user = this.GetActualUserById(id);
+            users.Remove(user);
         }
 
         public bool UserExistsById(int id)
-        {
-            throw new NotImplementedException();
+        {            
+            return users.Any(x => x.UserId == id);
         }
 
         public bool UserExistsByUsername(string username)
         {
-            throw new NotImplementedException();
+            if (username == null) throw new ArgumentNullException("username");
+            return users.Any(x => x.Username == username);
         }
 
         public UserData GetUserById(int id)
         {
-            throw new NotImplementedException();
+            if (id < 0) throw new ArgumentException("id");
+            if (!users.Any(x => x.UserId == id)) throw new UserDoesNotExistException();
+            return (UserData)users.First(x => x.UserId == id).Clone();
         }
 
         public UserData GetUserByUsername(string username)
         {
-            throw new NotImplementedException();
+            if (username == null) throw new ArgumentNullException("username");
+            if (!users.Any(x => x.Username == username)) throw new UserDoesNotExistException();
+            return (UserData)users.First(x => x.Username == username).Clone();
+        }
+
+        protected UserData GetActualUserById(int id)
+        {
+            if (id < 0) throw new ArgumentException("id");
+            if (!users.Any(x => x.UserId == id)) throw new UserDoesNotExistException();
+            return users.First(x => x.UserId == id);
+        }
+
+        protected UserData GetActualUserByUsername(string username)
+        {
+            if (username == null) throw new ArgumentNullException("username");
+            if (!users.Any(x => x.Username == username)) throw new UserDoesNotExistException();
+            return users.First(x => x.Username == username);
         }
 
         public void Dispose()
