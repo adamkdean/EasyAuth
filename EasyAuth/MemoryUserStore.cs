@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace EasyAuth
 {
-    public class SimpleUserStore : IUserStore
+    public class MemoryUserStore : IUserStore
     {
         private List<UserData> users;
 
-        public SimpleUserStore()
+        public MemoryUserStore()
         {
             users = new List<UserData>();
         }
 
         public void AddUser(string username, string password)
-        {            
+        {
             if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
             if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
             if(this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();

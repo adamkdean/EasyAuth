@@ -6,14 +6,14 @@ namespace EasyAuth.Tests
 {
     [ExcludeFromCodeCoverage]
     [TestClass]    
-    public class UserStoreTests
+    public class MemoryUserStoreTests
     {
         private IUserStore userStore;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            userStore = new SimpleUserStore();
+            userStore = new MemoryUserStore();
         }
 
         [TestCleanup]
