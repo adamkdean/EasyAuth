@@ -2,7 +2,7 @@
 
 namespace EasyAuth
 {
-    public class Authentication<T> : IDisposable where T : IUserStore, new()
+    /*public class Authentication<T> : IDisposable where T : IUserStore, new()
     {
         public bool IsAuthenticated { get; private set; }
 
@@ -32,5 +32,5 @@ namespace EasyAuth
         {
             userStore.Dispose();
         }
-    }
+    }*/
 }

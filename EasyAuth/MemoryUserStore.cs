@@ -4,14 +4,30 @@ using System.Collections.Generic;
 
 namespace EasyAuth
 {
+    /// <summary>
+    /// Stores users in a list in memory.
+    /// This is just for testing purposes really.
+    /// </summary>
     public class MemoryUserStore : IUserStore
     {
-        private List<UserData> users;
+        static MemoryUserStore instance = null;
+        static readonly object padlock = new object();
 
-        public MemoryUserStore()
+        MemoryUserStore() { }
+
+        public static MemoryUserStore Instance
         {
-            users = new List<UserData>();
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null) instance = new MemoryUserStore();
+                    return instance;
+                }
+            }
         }
+        
+        private List<UserData> users = new List<UserData>();
 
         public void AddUser(string username, string password)
         {
@@ -36,7 +52,7 @@ namespace EasyAuth
 
             UserData oldUserData = this.GetActualUserById(id);
             users.Remove(oldUserData);
-            users.Add(newUserData);
+            users.Add((UserData)newUserData.Clone()); // we clone this to protect the reference
         }
 
         public void DeleteUserById(int id)
@@ -58,6 +74,11 @@ namespace EasyAuth
             return users.Any(x => x.Username == username);
         }
 
+        /// <summary>
+        /// Return a clone of the user data object
+        /// This is so that they are forced to use the update method
+        /// rather than just changing the object directly.
+        /// </summary>
         public UserData GetUserById(int id)
         {
             if (id < 0) throw new ArgumentException("id");
@@ -65,6 +86,11 @@ namespace EasyAuth
             return (UserData)users.First(x => x.UserId == id).Clone();
         }
 
+        /// <summary>
+        /// Return a clone of the user data object
+        /// This is so that they are forced to use the update method
+        /// rather than just changing the object directly.
+        /// </summary>
         public UserData GetUserByUsername(string username)
         {
             if (username == null) throw new ArgumentNullException("username");
@@ -72,6 +98,10 @@ namespace EasyAuth
             return (UserData)users.First(x => x.Username == username).Clone();
         }
 
+        /// <summary>
+        /// Return the actual object reference for the user
+        /// We can use this to search by reference in the List<>
+        /// </summary>
         protected UserData GetActualUserById(int id)
         {
             if (id < 0) throw new ArgumentException("id");
@@ -79,6 +109,10 @@ namespace EasyAuth
             return users.First(x => x.UserId == id);
         }
 
+        /// <summary>
+        /// Return the actual object reference for the user
+        /// We can use this to search by reference in the List<>
+        /// </summary>
         protected UserData GetActualUserByUsername(string username)
         {
             if (username == null) throw new ArgumentNullException("username");
