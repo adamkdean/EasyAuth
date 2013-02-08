@@ -1,0 +1,8 @@
+﻿@if (EasyAuth.Authentication.IsAuthenticated())
+{
+    <p>Logged in as @EasyAuth.Authentication.CurrentUser.Username (@Html.ActionLink("Logout", "Logout", "Home"))</p>
+}
+else
+{
+    <p>Not logged in. @Html.ActionLink("Login", "Login", "Home")</p>
+}

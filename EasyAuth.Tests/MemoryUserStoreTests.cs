@@ -13,13 +13,13 @@ namespace EasyAuth.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            userStore = new MemoryUserStore();
+            userStore = MemoryUserStore.Instance;
         }
 
         [TestCleanup]
         public void TestCleanup()
-        {            
-            userStore.Dispose();
+        {
+            MemoryUserStore.Reset();
         }
 
         #region AddUser tests
@@ -134,7 +134,7 @@ namespace EasyAuth.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EasyAuth.UserIdDoesNotMatchUserObjectId))]
+        [ExpectedException(typeof(EasyAuth.UserIdDoesNotMatchUserObjectIdException))]
         public void UpdateUser_GivenUserIdThatDoesNotMatchUserObjectId_ThrowsException()
         {
             userStore.AddUser("user1", "password");

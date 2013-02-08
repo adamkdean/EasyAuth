@@ -1,0 +1,27 @@
+﻿@model EasyAuth.WebApp.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@Html.Partial("_Header")
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    @Html.LabelFor(m => m.Username)
+    @Html.TextBoxFor(m => m.Username)
+    @Html.ValidationMessageFor(m => m.Username)
+    <br />
+    @Html.LabelFor(m => m.Password)
+    @Html.TextBoxFor(m => m.Password)
+    @Html.ValidationMessageFor(m => m.Password)
+    <br />
+    <input type="submit" value="Login" />
+}
+
+<p>@ViewBag.Message</p>

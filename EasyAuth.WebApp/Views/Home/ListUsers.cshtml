@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "ListUsers";
+}
+
+@Html.Partial("_Header")
+
+<h2>ListUsers</h2>
+<table border="1">
+@foreach (EasyAuth.UserData user in EasyAuth.Authentication.UserStore.GetAllUsers())
+{
+    <tr>
+        <td>@user.UserId</td>
+        <td>@user.Username</td>
+        <td>@user.Password</td>
+    </tr>
+}
+</table>

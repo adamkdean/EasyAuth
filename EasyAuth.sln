@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAuth", "EasyAuth\EasyAu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAuth.Tests", "EasyAuth.Tests\EasyAuth.Tests.csproj", "{80459724-0F6E-44BE-80EE-ED8FCD6A79F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAuth.WebApp", "EasyAuth.WebApp\EasyAuth.WebApp.csproj", "{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAuth.WebApp.Tests", "EasyAuth.WebApp.Tests\EasyAuth.WebApp.Tests.csproj", "{FB513872-2F79-4148-A10D-8980B540F334}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{80459724-0F6E-44BE-80EE-ED8FCD6A79F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80459724-0F6E-44BE-80EE-ED8FCD6A79F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80459724-0F6E-44BE-80EE-ED8FCD6A79F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB513872-2F79-4148-A10D-8980B540F334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB513872-2F79-4148-A10D-8980B540F334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB513872-2F79-4148-A10D-8980B540F334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB513872-2F79-4148-A10D-8980B540F334}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

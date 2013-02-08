@@ -28,6 +28,6 @@ namespace EasyAuth.Tests
             auth.Login("username", "password");
             auth.Logout();
             auth.IsAuthenticated;
-        }*/
-    }
+        }
+    }*/
 }
