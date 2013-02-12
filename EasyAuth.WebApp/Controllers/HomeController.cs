@@ -7,13 +7,13 @@ using System.Web.Mvc;
 
 namespace EasyAuth.WebApp.Controllers
 {
-    [RequireAuthorization]
+    [EzAuthorize]
     public class HomeController : Controller
     {        
         //
         // GET: /Home/
 
-        [AllowUnauthorized]
+        [EzAllowAnonymous]
         public ActionResult Index()
         {            
             return View();
@@ -22,7 +22,7 @@ namespace EasyAuth.WebApp.Controllers
         //
         // GET: /Home/Login
 
-        [RequireUnauthorized]
+        [EzAllowAnonymous]
         public ActionResult Login()
         {            
             return View();
@@ -32,15 +32,15 @@ namespace EasyAuth.WebApp.Controllers
         // POST: /Home/Login
 
         [HttpPost]
-        [RequireUnauthorized]
+        [EzAllowAnonymous]
         public ActionResult Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && Authentication.Login(model.Username, model.Password))
             {
-                bool login_ok = Authentication.Login(model.Username, model.Password);
-                ViewBag.Message = "Logged in ok? " + login_ok.ToString();
+                return RedirectToAction("MembersOnly", "Home");
             }
 
+            ViewBag.Message = "Invalid user credentials";
             return View(model);
         }
 
@@ -50,7 +50,7 @@ namespace EasyAuth.WebApp.Controllers
         public ActionResult Logout()
         {
             Authentication.Logout();
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -63,8 +63,8 @@ namespace EasyAuth.WebApp.Controllers
 
         //
         // GET: /Home/ListUsers
-        
-        [AllowUnauthorized]
+
+        [EzAllowAnonymous]
         public ActionResult ListUsers()
         {            
             return View();
@@ -73,7 +73,7 @@ namespace EasyAuth.WebApp.Controllers
         //
         // GET: /Home/CreateUser
 
-        [AllowUnauthorized]
+        [EzAllowAnonymous]
         public ActionResult CreateUser()
         {
             string username = "", password = "";

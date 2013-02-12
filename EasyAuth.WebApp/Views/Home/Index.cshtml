@@ -5,4 +5,21 @@
 @Html.Partial("_Header")
 
 <h2>Index</h2>
-<p>@ViewBag.Message</p>
+
+<h4>Pages/Actions</h4>
+<ul>
+    <li>Home : EzAllowAnonymous</li>
+    <li>MembersOnly : EzAuthorize</li>
+    <li>CreateUser : EzAllowAnonymous</li>
+    <li>ListUsers : EzAllowAnonymous</li>
+    <li>Login : EzAllowAnonymous</li>
+    <li>Logout : EzAuthorize</li>
+</ul>
+
+<h4>What to do:</h4>
+<p>Make a user using create user, you can view it in list users, try to use membersonly, but this redirects to login page.</p>
+<p>It redirects to the page set in web.config:<br />
+    <pre>&lt;authentication mode=&quot;Forms&quot;&gt;
+  &lt;forms loginUrl=&quot;~/Home/Login&quot; timeout=&quot;2880&quot; /&gt;
+&lt;/authentication&gt;</pre>
+</p>

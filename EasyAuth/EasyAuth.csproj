@@ -45,12 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth\Authentication.cs" />
+    <Compile Include="Exceptions\AuthorizeAttribute_CannotUseWithinChildActionCacheException.cs" />
     <Compile Include="Exceptions\UserIdDoesNotMatchUserObjectIdException.cs" />
     <Compile Include="Exceptions\UserAlreadyExistsException.cs" />
-    <Compile Include="Filters\AllowUnauthorizedFilter.cs" />
+    <Compile Include="Filters\EzAllowAnonymousAttribute.cs" />
     <Content Include="Filters\ImportantPost.txt" />
-    <Compile Include="Filters\RequireUnauthorizedFilter.cs" />
-    <Compile Include="Filters\RequireAuthorizationFilter.cs" />
+    <Compile Include="Filters\EzAuthorizeAttribute.cs" />
     <Compile Include="Exceptions\UserDoesNotExistException.cs" />
     <Compile Include="UserStore\IUserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
