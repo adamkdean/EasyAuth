@@ -6,7 +6,7 @@
 
 <h2>ListUsers</h2>
 <table border="1">
-@foreach (EasyAuth.UserData user in EasyAuth.Authentication.UserStore.GetAllUsers())
+@foreach (EasyAuth.User user in EasyAuth.Authentication.UserStore.GetAllUsers())
 {
     <tr>
         <td>@user.UserId</td>

@@ -7,15 +7,15 @@ namespace EasyAuth
     {
         void AddUser(string username, string password);
         
-        void UpdateUserById(int id, UserData user);
+        void UpdateUserById(int id, User user);
         
         void DeleteUserById(int id);
         
         bool UserExistsById(int id);
         bool UserExistsByUsername(string username);
 
-        UserData GetUserById(int id);
-        UserData GetUserByUsername(string username);
-        List<UserData> GetAllUsers();
+        User GetUserById(int id);
+        User GetUserByUsername(string username);
+        List<User> GetAllUsers();
     }
 }

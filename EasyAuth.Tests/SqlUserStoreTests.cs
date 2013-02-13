@@ -31,7 +31,7 @@ namespace EasyAuth.Tests
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
 
-            UserData user = userStore.GetUserByUsername(username);
+            User user = userStore.GetUserByUsername(username);
             var actual = user.Username;
             var expected = username;
 
@@ -104,7 +104,7 @@ namespace EasyAuth.Tests
         {
             string username = "testuser", password = "testpass", newUsername = "newusername";
             userStore.AddUser(username, password);
-            UserData user = userStore.GetUserByUsername(username);
+            User user = userStore.GetUserByUsername(username);
             
             user.Username = newUsername;
             userStore.UpdateUserById(user.UserId, user);
@@ -119,7 +119,7 @@ namespace EasyAuth.Tests
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
-            UserData user = userStore.GetUserByUsername(username);
+            User user = userStore.GetUserByUsername(username);
 
             userStore.UpdateUserById(user.UserId, null);
         }
@@ -130,7 +130,7 @@ namespace EasyAuth.Tests
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
-            UserData user = userStore.GetUserByUsername(username);
+            User user = userStore.GetUserByUsername(username);
 
             userStore.UpdateUserById(26, user);
         }
@@ -141,8 +141,8 @@ namespace EasyAuth.Tests
         {
             userStore.AddUser("user1", "password");
             userStore.AddUser("user2", "password");
-            UserData user1 = userStore.GetUserByUsername("user1");
-            UserData user2 = userStore.GetUserByUsername("user2");
+            User user1 = userStore.GetUserByUsername("user1");
+            User user2 = userStore.GetUserByUsername("user2");
 
             userStore.UpdateUserById(user1.UserId, user2);
         }
@@ -153,7 +153,7 @@ namespace EasyAuth.Tests
         public void SqlUserStore_UserExistsById_GivenExistingUserId_ReturnsTrue()
         {
             userStore.AddUser("user1", "password");            
-            UserData user1 = userStore.GetUserByUsername("user1");
+            User user1 = userStore.GetUserByUsername("user1");
 
             var actual = userStore.UserExistsById(user1.UserId);
 
@@ -202,9 +202,9 @@ namespace EasyAuth.Tests
         {
             string username = "user1";
             userStore.AddUser(username, "password");
-            UserData user1 = userStore.GetUserByUsername(username);
+            User user1 = userStore.GetUserByUsername(username);
 
-            UserData user = userStore.GetUserById(user1.UserId);
+            User user = userStore.GetUserById(user1.UserId);
             var expected = username;
             var actual = user.Username;
 
@@ -226,15 +226,15 @@ namespace EasyAuth.Tests
         }
 
         [TestMethod]
-        public void SqlUserStore_GetUserById_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
+        public void SqlUserStore_GetUserById_UserChangedWithoutUpdate_StoredUserNotAffected()
         {
             string username = "user1";
             userStore.AddUser(username, "password");
             int userId = userStore.GetUserByUsername(username).UserId;
 
-            UserData userNotUpdated = userStore.GetUserById(userId);
+            User userNotUpdated = userStore.GetUserById(userId);
             userNotUpdated.Username = "bogususername";
-            UserData userOriginal = userStore.GetUserById(userId);
+            User userOriginal = userStore.GetUserById(userId);
             var expected = username;
             var actual = userOriginal.Username;
 
@@ -249,7 +249,7 @@ namespace EasyAuth.Tests
             string username = "user1";
             userStore.AddUser(username, "password");
             
-            UserData user = userStore.GetUserByUsername(username);
+            User user = userStore.GetUserByUsername(username);
             var expected = username;
             var actual = user.Username;
 
@@ -271,14 +271,14 @@ namespace EasyAuth.Tests
         }
 
         [TestMethod]
-        public void SqlUserStore_GetUserByUsername_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
+        public void SqlUserStore_GetUserByUsername_UserChangedWithoutUpdate_StoredUserNotAffected()
         {
             string username = "user1";
             userStore.AddUser(username, "password");
 
-            UserData userNotUpdated = userStore.GetUserByUsername(username);
+            User userNotUpdated = userStore.GetUserByUsername(username);
             userNotUpdated.Username = "bogususername";
-            UserData userOriginal = userStore.GetUserByUsername(username);
+            User userOriginal = userStore.GetUserByUsername(username);
             var expected = username;
             var actual = userOriginal.Username;
 

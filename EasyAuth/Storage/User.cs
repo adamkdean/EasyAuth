@@ -1,7 +1,7 @@
 ﻿using System;
 namespace EasyAuth
 {
-    public class UserData : ICloneable
+    public class User : ICloneable
     {
         public int UserId { get; set; }
         public string Username { get; set; }

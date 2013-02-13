@@ -10,7 +10,7 @@ namespace EasyAuth
 
         public static IUserStore UserStore { get; set; }
         public static HttpContext HttpContext { get; set; }
-        public static UserData CurrentUser { get; private set; }
+        public static User CurrentUser { get; private set; }
 
         public static bool Authenticate()
         {
@@ -22,7 +22,7 @@ namespace EasyAuth
 
                 if (UserStore.UserExistsByUsername(name))
                 {
-                    UserData user = UserStore.GetUserByUsername(name);
+                    User user = UserStore.GetUserByUsername(name);
 
                     // TODO: proper hash
                     if (user.Password == hash)
@@ -78,7 +78,7 @@ namespace EasyAuth
         {
             if (UserStore.UserExistsByUsername(username))
             {
-                UserData user = UserStore.GetUserByUsername(username);
+                User user = UserStore.GetUserByUsername(username);
 
                 // TODO: proper hash
                 if (user.Password == password)

@@ -40,9 +40,9 @@ namespace EasyAuth.Storage
             throw new NotImplementedException();            
         }
 
-        public void UpdateUserById(int id, UserData newUserData)
+        public void UpdateUserById(int id, User newUser)
         {
-            if (newUserData == null) throw new ArgumentNullException();
+            if (newUser == null) throw new ArgumentNullException();
             if (!this.UserExistsById(id)) throw new UserDoesNotExistException();
             
             throw new NotImplementedException();
@@ -67,21 +67,21 @@ namespace EasyAuth.Storage
             throw new NotImplementedException();
         }
 
-        public UserData GetUserById(int id)
+        public User GetUserById(int id)
         {
             if (id < 0) throw new ArgumentException("id");
 
             throw new NotImplementedException();
         }
 
-        public UserData GetUserByUsername(string username)
+        public User GetUserByUsername(string username)
         {
             if (username == null) throw new ArgumentNullException("username");
 
             throw new NotImplementedException();
         }
 
-        public List<UserData> GetAllUsers()
+        public List<User> GetAllUsers()
         {
             throw new NotImplementedException();
         }

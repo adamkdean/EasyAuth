@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAuth.Tests", "EasyAuth.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAuth.WebApp", "EasyAuth.WebApp\EasyAuth.WebApp.csproj", "{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyAuth.Console", "EasyAuth.Console\EasyAuth.Console.csproj", "{28738EA7-C0EB-467E-ACC5-0B69C2B9CF00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8C84DF8-3006-46B3-8F25-C29C4E0A0B3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28738EA7-C0EB-467E-ACC5-0B69C2B9CF00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28738EA7-C0EB-467E-ACC5-0B69C2B9CF00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28738EA7-C0EB-467E-ACC5-0B69C2B9CF00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28738EA7-C0EB-467E-ACC5-0B69C2B9CF00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
