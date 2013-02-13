@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Playlist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Include>
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserById_GivenExistingUserId_ReturnsCorrectUser" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserByUsername_GivenNonExistantUsername_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_AddUser_GivenAlreadyExistingUsername_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_AddUser_GivenEmptySecondArgument_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserById_GivenNegativeId_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UserExistsByUsername_GivenNonExistantUserId_ReturnsFalse" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UserExistsByUsername_GivenNull_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserByUsername_GivenExistingUsername_ReturnsCorrectUser" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_AddUser_GivenEmptyFirstArgument_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserByUsername_UserDataChangedWithoutUpdate_StoredUserDataNotAffected" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserByUsername_GivenNullArgument_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UserExistsByUsername_GivenExistingUsername_ReturnsTrue" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserById_UserDataChangedWithoutUpdate_StoredUserDataNotAffected" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UserExistsById_GivenExistingUserId_ReturnsTrue" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UpdateUser_GivenNullSecondArgument_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UpdateUser_GivenNonExistantUserId_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UpdateUser_GivenUserIdThatDoesNotMatchUserObjectId_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UserExistsById_GivenNonExistantUserId_ReturnsFalse" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_GetUserById_GivenNonExistantUserId_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_UpdateUser_GivenExistingUser_UserUpdated" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_AddUser_GivenNullFirstArgument_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_AddUser_GivenNullSecondArgument_ThrowsException" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_AddUser_GivenNewUser_UserAdded" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_DeleteUser_GivenExistingUserId_UserDeleted" />
+    <FullyQualifiedName Name="EasyAuth.Tests.RavenUserStoreTests.RavenUserStore_DeleteUser_GivenNonExistantUserId_ThrowsException" />
+  </Include>
+</Playlist>

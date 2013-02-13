@@ -61,6 +61,11 @@
       <Name>EasyAuth</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Playlists\MemoryUserStoreTests.playlist" />
+    <None Include="Playlists\RavenUserStoreTests.playlist" />
+    <None Include="Playlists\SqlUserStoreTests.playlist" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
