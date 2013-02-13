@@ -36,7 +36,7 @@ namespace EasyAuth
             // authorization before the fragment is served from the cache, so we can't guarantee that this
             // filter will be re-run on subsequent requests.
             if (OutputCacheAttribute.IsChildActionCacheActive(filterContext))
-                throw new EzAuthorizeAttribute_CannotUseWithinChildActionCache();
+                throw new CannotUseWithinChildActionCache();
 
             bool skipAuthorization = filterContext.ActionDescriptor.IsDefined(typeof(EzAllowAnonymousAttribute), inherit: true)
                                      || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(EzAllowAnonymousAttribute), inherit: true);

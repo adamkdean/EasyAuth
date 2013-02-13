@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using EasyAuth.Helpers;
 
-namespace EasyAuth
+namespace EasyAuth.Storage
 {
     /// <summary>
-    /// Stores users in a list in memory.
-    /// This is just for testing purposes really.
+    /// Stores users in a list in memory.    
     /// </summary>
     public class MemoryUserStore : IUserStore
     {
@@ -125,9 +125,10 @@ namespace EasyAuth
             return users.First(x => x.Username == username);
         }
 
-        public dynamic GetAllUsers()
+        public List<UserData> GetAllUsers()
         {
-            return users.ToArray();
+            List<UserData> copiedUsers = GenericCopier<List<UserData>>.DeepCopy(users);
+            return copiedUsers;
         }
     }
 }

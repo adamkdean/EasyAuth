@@ -8,25 +8,25 @@ namespace EasyAuth.Tests
 {
     [ExcludeFromCodeCoverage]
     [TestClass]
-    public class MemoryUserStoreTests
+    public class RavenUserStoreTests
     {
         private IUserStore userStore;
-
+        
         [TestInitialize]
         public void TestInitialize()
         {
-            userStore = MemoryUserStore.Instance;
+            userStore = RavenUserStore.Instance;
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            MemoryUserStore.Reset();
+            RavenUserStore.Reset();
         }
 
         #region AddUser tests
         [TestMethod]
-        public void MemoryUserStore_AddUser_GivenNewUser_UserAdded()
+        public void RavenUserStore_AddUser_GivenNewUser_UserAdded()
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
@@ -40,7 +40,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserAlreadyExistsException))]
-        public void MemoryUserStore_AddUser_GivenAlreadyExistingUsername_ThrowsException()
+        public void RavenUserStore_AddUser_GivenAlreadyExistingUsername_ThrowsException()
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
@@ -50,28 +50,28 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MemoryUserStore_AddUser_GivenEmptyFirstArgument_ThrowsException()
+        public void RavenUserStore_AddUser_GivenEmptyFirstArgument_ThrowsException()
         {
             userStore.AddUser("", "password");
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MemoryUserStore_AddUser_GivenEmptySecondArgument_ThrowsException()
+        public void RavenUserStore_AddUser_GivenEmptySecondArgument_ThrowsException()
         {
             userStore.AddUser("username", "");
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MemoryUserStore_AddUser_GivenNullFirstArgument_ThrowsException()
+        public void RavenUserStore_AddUser_GivenNullFirstArgument_ThrowsException()
         {
             userStore.AddUser(null, "password");
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MemoryUserStore_AddUser_GivenNullSecondArgument_ThrowsException()
+        public void RavenUserStore_AddUser_GivenNullSecondArgument_ThrowsException()
         {
             userStore.AddUser("username", null);
         }
@@ -79,7 +79,7 @@ namespace EasyAuth.Tests
 
         #region DeleteUser tests
         [TestMethod]
-        public void MemoryUserStore_DeleteUser_GivenExistingUserId_UserDeleted()
+        public void RavenUserStore_DeleteUser_GivenExistingUserId_UserDeleted()
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
@@ -92,7 +92,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserDoesNotExistException))]
-        public void MemoryUserStore_DeleteUser_GivenNonExistantUserId_ThrowsException()
+        public void RavenUserStore_DeleteUser_GivenNonExistantUserId_ThrowsException()
         {
             userStore.DeleteUserById(395);
         }
@@ -100,7 +100,7 @@ namespace EasyAuth.Tests
 
         #region UpdateUser tests
         [TestMethod]
-        public void MemoryUserStore_UpdateUser_GivenExistingUser_UserUpdated()
+        public void RavenUserStore_UpdateUser_GivenExistingUser_UserUpdated()
         {
             string username = "testuser", password = "testpass", newUsername = "newusername";
             userStore.AddUser(username, password);
@@ -115,7 +115,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MemoryUserStore_UpdateUser_GivenNullSecondArgument_ThrowsException()
+        public void RavenUserStore_UpdateUser_GivenNullSecondArgument_ThrowsException()
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
@@ -126,7 +126,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserDoesNotExistException))]
-        public void MemoryUserStore_UpdateUser_GivenNonExistantUserId_ThrowsException()
+        public void RavenUserStore_UpdateUser_GivenNonExistantUserId_ThrowsException()
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
@@ -137,7 +137,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserIdDoesNotMatchUserObjectIdException))]
-        public void MemoryUserStore_UpdateUser_GivenUserIdThatDoesNotMatchUserObjectId_ThrowsException()
+        public void RavenUserStore_UpdateUser_GivenUserIdThatDoesNotMatchUserObjectId_ThrowsException()
         {
             userStore.AddUser("user1", "password");
             userStore.AddUser("user2", "password");
@@ -150,7 +150,7 @@ namespace EasyAuth.Tests
 
         #region UserExistsById tests
         [TestMethod]
-        public void MemoryUserStore_UserExistsById_GivenExistingUserId_ReturnsTrue()
+        public void RavenUserStore_UserExistsById_GivenExistingUserId_ReturnsTrue()
         {
             userStore.AddUser("user1", "password");            
             UserData user1 = userStore.GetUserByUsername("user1");
@@ -161,7 +161,7 @@ namespace EasyAuth.Tests
         }
 
         [TestMethod]
-        public void MemoryUserStore_UserExistsById_GivenNonExistantUserId_ReturnsFalse()
+        public void RavenUserStore_UserExistsById_GivenNonExistantUserId_ReturnsFalse()
         {
             var actual = userStore.UserExistsById(236);
 
@@ -171,7 +171,7 @@ namespace EasyAuth.Tests
 
         #region UserExistsByUsername tests
         [TestMethod]
-        public void MemoryUserStore_UserExistsByUsername_GivenExistingUsername_ReturnsTrue()
+        public void RavenUserStore_UserExistsByUsername_GivenExistingUsername_ReturnsTrue()
         {
             userStore.AddUser("user1", "password");
 
@@ -181,7 +181,7 @@ namespace EasyAuth.Tests
         }
 
         [TestMethod]
-        public void MemoryUserStore_UserExistsByUsername_GivenNonExistantUserId_ReturnsFalse()
+        public void RavenUserStore_UserExistsByUsername_GivenNonExistantUserId_ReturnsFalse()
         {
             var actual = userStore.UserExistsByUsername("doesnotexist");
 
@@ -190,7 +190,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MemoryUserStore_UserExistsByUsername_GivenNull_ThrowsException()
+        public void RavenUserStore_UserExistsByUsername_GivenNull_ThrowsException()
         {
             userStore.UserExistsByUsername(null);
         }
@@ -198,7 +198,7 @@ namespace EasyAuth.Tests
 
         #region GetUserById tests
         [TestMethod]
-        public void MemoryUserStore_GetUserById_GivenExistingUserId_ReturnsCorrectUser()
+        public void RavenUserStore_GetUserById_GivenExistingUserId_ReturnsCorrectUser()
         {
             string username = "user1";
             userStore.AddUser(username, "password");
@@ -213,20 +213,20 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void MemoryUserStore_GetUserById_GivenNegativeId_ThrowsException()
+        public void RavenUserStore_GetUserById_GivenNegativeId_ThrowsException()
         {
             userStore.GetUserById(-20);
         }
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserDoesNotExistException))]
-        public void MemoryUserStore_GetUserById_GivenNonExistantUserId_ThrowsException()
+        public void RavenUserStore_GetUserById_GivenNonExistantUserId_ThrowsException()
         {
             userStore.GetUserById(12);
         }
 
         [TestMethod]
-        public void MemoryUserStore_GetUserById_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
+        public void RavenUserStore_GetUserById_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
         {
             string username = "user1";
             userStore.AddUser(username, "password");
@@ -244,7 +244,7 @@ namespace EasyAuth.Tests
 
         #region GetUserByUsername tests
         [TestMethod]
-        public void MemoryUserStore_GetUserByUsername_GivenExistingUsername_ReturnsCorrectUser()
+        public void RavenUserStore_GetUserByUsername_GivenExistingUsername_ReturnsCorrectUser()
         {
             string username = "user1";
             userStore.AddUser(username, "password");
@@ -258,20 +258,20 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void MemoryUserStore_GetUserByUsername_GivenNullArgument_ThrowsException()
+        public void RavenUserStore_GetUserByUsername_GivenNullArgument_ThrowsException()
         {
             userStore.GetUserByUsername(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserDoesNotExistException))]
-        public void MemoryUserStore_GetUserByUsername_GivenNonExistantUsername_ThrowsException()
+        public void RavenUserStore_GetUserByUsername_GivenNonExistantUsername_ThrowsException()
         {
             userStore.GetUserByUsername("NotAValidUser");
         }
 
         [TestMethod]
-        public void MemoryUserStore_GetUserByUsername_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
+        public void RavenUserStore_GetUserByUsername_UserDataChangedWithoutUpdate_StoredUserDataNotAffected()
         {
             string username = "user1";
             userStore.AddUser(username, "password");

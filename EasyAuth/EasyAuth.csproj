@@ -44,19 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\Authentication.cs" />
-    <Compile Include="Exceptions\AuthorizeAttribute_CannotUseWithinChildActionCacheException.cs" />
+    <Compile Include="Authentication.cs" />
+    <Compile Include="Exceptions\CannotUseWithinChildActionCacheException.cs" />
     <Compile Include="Exceptions\UserIdDoesNotMatchUserObjectIdException.cs" />
     <Compile Include="Exceptions\UserAlreadyExistsException.cs" />
-    <Compile Include="Filters\EzAllowAnonymousAttribute.cs" />
-    <Content Include="Filters\ImportantPost.txt" />
-    <Compile Include="Filters\EzAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\EzAllowAnonymousAttribute.cs" />
+    <Compile Include="Attributes\EzAuthorizeAttribute.cs" />
     <Compile Include="Exceptions\UserDoesNotExistException.cs" />
-    <Compile Include="UserStore\IUserStore.cs" />
+    <Compile Include="Helpers\GenericCopier.cs" />
+    <Compile Include="Storage\RavenUserStore\RavenUserStore.cs" />
+    <Compile Include="Storage\SqlUserStore\SqlUserStore.cs" />
+    <Compile Include="Storage\IUserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserStore\MemoryUserStore.cs" />
-    <Compile Include="UserStore\UserData.cs" />
+    <Compile Include="Storage\MemoryUserStore\MemoryUserStore.cs" />
+    <Compile Include="Storage\UserData.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
