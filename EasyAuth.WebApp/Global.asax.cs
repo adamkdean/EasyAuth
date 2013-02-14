@@ -20,7 +20,7 @@ namespace EasyAuth.WebApp
         
         protected void Application_Start()
         {
-            Authentication.UserStore = UserStore;            
+            Authentication.UserStore = UserStore;
 
             // ASP.NET Generated code
             AreaRegistration.RegisterAllAreas();

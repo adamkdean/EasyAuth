@@ -2,6 +2,10 @@
 using System.Linq;
 using System.Collections.Generic;
 using EasyAuth.Helpers;
+using System.Runtime.CompilerServices;
+
+/* We only want the Tests to be able to call IUserStore.Reset() */
+[assembly: InternalsVisibleTo("EasyAuth.Tests")]
 
 namespace EasyAuth.Storage
 {
@@ -25,11 +29,6 @@ namespace EasyAuth.Storage
                     return instance;
                 }
             }
-        }
-
-        public static void Reset()
-        {
-            instance = null;
         }
 
         private List<User> users = new List<User>();
@@ -129,6 +128,12 @@ namespace EasyAuth.Storage
         {
             List<User> copiedUsers = GenericCopier<List<User>>.DeepCopy(users);
             return copiedUsers;
+        }
+
+        /* this is only visible to EasyAuth.Tests */
+        internal void Reset()
+        {
+            users = new List<User>();
         }
     }
 }

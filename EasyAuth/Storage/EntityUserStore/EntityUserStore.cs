@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using EasyAuth.Helpers;
+using EntityFramework.Extensions;
+
+/* We only want the Tests to be able to call IUserStore.Reset() */
+[assembly: InternalsVisibleTo("EasyAuth.Tests")]
 
 namespace EasyAuth.Storage
 {
@@ -27,8 +32,6 @@ namespace EasyAuth.Storage
                 }
             }
         }
-
-        public static void Reset() { }
         #endregion
 
         private Type contextType = typeof(UserStoreContext);
@@ -46,8 +49,8 @@ namespace EasyAuth.Storage
 
             using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
-                User userA = new User { Username = username, Password = password };
-                context.Users.Add(userA);
+                User user = new User { Username = username, Password = password };
+                context.Users.Add(user);
                 context.SaveChanges();
             }
         }
@@ -56,15 +59,25 @@ namespace EasyAuth.Storage
         {
             if (newUser == null) throw new ArgumentNullException();
             if (!this.UserExistsById(id)) throw new UserDoesNotExistException();
-            
-            throw new NotImplementedException();
+            if (id != newUser.UserId) throw new UserIdDoesNotMatchUserObjectIdException();
+
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
+            {
+                User user = (User)context.Users.First(x => x.UserId == id);
+                user.Username = newUser.Username;
+                user.Password = newUser.Password;
+                context.SaveChanges();
+            }
         }
 
         public void DeleteUserById(int id)
         {            
             if (!this.UserExistsById(id)) throw new UserDoesNotExistException();
 
-            throw new NotImplementedException();
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
+            {
+                context.Users.Delete(x => x.UserId == id);
+            }
         }
 
         public bool UserExistsById(int id)
@@ -90,7 +103,10 @@ namespace EasyAuth.Storage
             if (id < 0) throw new ArgumentException("id");
             if (!UserExistsById(id)) throw new UserDoesNotExistException();
 
-            throw new NotImplementedException();
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
+            {
+                return (User)context.Users.First(x => x.UserId == id);
+            }
         }
 
         public User GetUserByUsername(string username)
@@ -112,6 +128,15 @@ namespace EasyAuth.Storage
             {
                 return List<User>context.Users;
             }*/
+        }
+
+        internal void Reset()
+        {
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
+            {
+                context.Users.Delete();
+                context.SaveChanges();
+            }
         }
     }
 }

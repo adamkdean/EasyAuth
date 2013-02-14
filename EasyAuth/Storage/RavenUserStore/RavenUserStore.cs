@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
+/* We only want the Tests to be able to call IUserStore.Reset() */
+[assembly: InternalsVisibleTo("EasyAuth.Tests")]
 
 namespace EasyAuth.Storage
 {
@@ -24,11 +28,6 @@ namespace EasyAuth.Storage
                     return instance;
                 }
             }
-        }
-
-        public static void Reset()
-        {
-            //
         }
 
         public void AddUser(string username, string password)
@@ -82,6 +81,12 @@ namespace EasyAuth.Storage
         }
 
         public List<User> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        /* this is only visible to EasyAuth.Tests */
+        internal void Reset()
         {
             throw new NotImplementedException();
         }

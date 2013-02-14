@@ -10,7 +10,7 @@ namespace EasyAuth.Tests
     [TestClass]
     public class RavenUserStoreTests
     {
-        private IUserStore userStore;
+        private RavenUserStore userStore;
         
         [TestInitialize]
         public void TestInitialize()
@@ -21,7 +21,7 @@ namespace EasyAuth.Tests
         [TestCleanup]
         public void TestCleanup()
         {
-            RavenUserStore.Reset();
+            userStore.Reset();
         }
 
         #region AddUser tests
@@ -98,9 +98,9 @@ namespace EasyAuth.Tests
         }
         #endregion
 
-        #region UpdateUser tests
+        #region UpdateUserById tests
         [TestMethod]
-        public void RavenUserStore_UpdateUser_GivenExistingUser_UserUpdated()
+        public void RavenUserStore_UpdateUserById_GivenExistingUser_UserUpdated()
         {
             string username = "testuser", password = "testpass", newUsername = "newusername";
             userStore.AddUser(username, password);
@@ -115,7 +115,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(System.ArgumentNullException))]
-        public void RavenUserStore_UpdateUser_GivenNullSecondArgument_ThrowsException()
+        public void RavenUserStore_UpdateUserById_GivenNullSecondArgument_ThrowsException()
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
@@ -126,7 +126,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserDoesNotExistException))]
-        public void RavenUserStore_UpdateUser_GivenNonExistantUserId_ThrowsException()
+        public void RavenUserStore_UpdateUserById_GivenNonExistantUserId_ThrowsException()
         {
             string username = "testuser", password = "testpass";
             userStore.AddUser(username, password);
@@ -137,7 +137,7 @@ namespace EasyAuth.Tests
 
         [TestMethod]
         [ExpectedException(typeof(EasyAuth.UserIdDoesNotMatchUserObjectIdException))]
-        public void RavenUserStore_UpdateUser_GivenUserIdThatDoesNotMatchUserObjectId_ThrowsException()
+        public void RavenUserStore_UpdateUserById_GivenUserIdThatDoesNotMatchUserObjectId_ThrowsException()
         {
             userStore.AddUser("user1", "password");
             userStore.AddUser("user2", "password");
@@ -145,6 +145,23 @@ namespace EasyAuth.Tests
             User user2 = userStore.GetUserByUsername("user2");
 
             userStore.UpdateUserById(user1.UserId, user2);
+        }
+
+        [TestMethod]
+        public void RavenUserStore_UpdateUserById_UserChangedWithoutUpdate_NotAffectedByUnrelatedUpdate()
+        {
+            string nameA = "userA", nameB = "userB";
+            userStore.AddUser(nameA, "passA");
+            userStore.AddUser(nameB, "passB");
+            User userA = userStore.GetUserByUsername(nameA);
+            User userB = userStore.GetUserByUsername(nameB);
+
+            userA.Username = "changedA";
+            userB.Username = "changedB";
+            userStore.UpdateUserById(userB.UserId, userB);
+            var actual = userStore.UserExistsByUsername(nameA);
+
+            Assert.IsTrue(actual);
         }
         #endregion
 
