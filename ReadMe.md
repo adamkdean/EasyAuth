@@ -108,8 +108,8 @@ Authenticate a user with `Authentication.Login(username, password)`, and log the
             {
                 return View();
             }
+        }
     }
-}
 
 And that's it!
 
