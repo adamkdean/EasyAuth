@@ -11,9 +11,9 @@ namespace EasyAuth.Helpers
     // Copyright © Judah Himango
     // http://stackoverflow.com/users/536/judah-himango
 
-    public static class GenericType
+    internal static class GenericType
     {
-        public static T CreateType<T>() where T : new()
+        internal static T CreateType<T>() where T : new()
         {
             return new T();
         }

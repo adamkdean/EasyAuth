@@ -1,6 +1,7 @@
 ﻿using EasyAuth.WebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,18 @@ namespace EasyAuth.WebApp.Controllers
         [EzAllowAnonymous]
         public ActionResult Index()
         {            
+            return View();
+        }
+
+        //
+        // GET: /Home/Test
+
+        [EzAllowAnonymous]
+        public ActionResult Test()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            ViewBag.Message = string.Format("ConnectionStrings[\"DefaultConnection\"] = {0}", connectionString);
+
             return View();
         }
 

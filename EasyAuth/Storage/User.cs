@@ -1,6 +1,7 @@
 ﻿using System;
 namespace EasyAuth
 {
+    [Serializable]
     public class User : ICloneable
     {
         public int UserId { get; set; }

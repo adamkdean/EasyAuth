@@ -122,12 +122,10 @@ namespace EasyAuth.Storage
 
         public List<User> GetAllUsers()
         {
-            throw new NotImplementedException();
-
-            /*using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
-                return List<User>context.Users;
-            }*/
+                return context.Users.ToList<User>();
+            }
         }
 
         internal void Reset()

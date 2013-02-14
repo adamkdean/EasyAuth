@@ -11,9 +11,9 @@ namespace EasyAuth.Helpers
     // Copyright © Binoj Antony
     // http://stackoverflow.com/users/33015/binoj-antony
 
-    public static class GenericCopier<T>
+    internal static class GenericCopier<T>
     {
-        public static T DeepCopy(object objectToCopy)
+        internal static T DeepCopy(object objectToCopy)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {

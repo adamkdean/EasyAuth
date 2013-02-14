@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EasyAuth;
 using EasyAuth.Storage;
+using System.Collections.Generic;
 
 namespace EasyAuth.Tests
 {
@@ -300,6 +301,43 @@ namespace EasyAuth.Tests
             var actual = userOriginal.Username;
 
             Assert.AreEqual(expected, actual);
+        }
+        #endregion
+
+        #region GetAllUsers tests
+        [TestMethod]
+        public void EntityUserStore_GetAllUsers_MultipleUsersAdded_ReturnsCorrectAmount()
+        {
+            userStore.AddUser("user1", "pass");
+            userStore.AddUser("user2", "pass");
+            userStore.AddUser("user3", "pass");
+
+            List<User> allUsers = userStore.GetAllUsers();
+            var expected = 3;
+            var actual = allUsers.Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void EntityUserStore_GetAllUsers_MultipleUsersAdded_ReturnsCorrectUsers()
+        {
+            bool containsUser1 = false, containsUser2 = false;
+            userStore.AddUser("user1", "pass");
+            userStore.AddUser("user2", "pass");            
+            User user1 = userStore.GetUserByUsername("user1");
+            User user2 = userStore.GetUserByUsername("user2");
+
+            List<User> allUsers = userStore.GetAllUsers();            
+            foreach (User u in allUsers)
+            {
+                if (u.Username == user1.Username) containsUser1 = true;
+                if (u.Username == user2.Username) containsUser2 = true;
+            }
+
+            var actual = (containsUser1 && containsUser2);
+
+            Assert.IsTrue(actual);
         }
         #endregion
     }
