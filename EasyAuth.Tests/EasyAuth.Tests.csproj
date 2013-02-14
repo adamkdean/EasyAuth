@@ -56,10 +56,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EntityUserStoreTests.cs" />
-    <Compile Include="RavenUserStoreTests.cs" />
-    <Compile Include="SqlUserStoreTests.cs" />
-    <Compile Include="MemoryUserStoreTests.cs" />
+    <Compile Include="UserStoreTests\EntityUserStoreTests.cs" />
+    <Compile Include="UserStoreTests\RavenUserStoreTests.cs" />
+    <Compile Include="UserStoreTests\SqlUserStoreTests.cs" />
+    <Compile Include="UserStoreTests\MemoryUserStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="connections.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

@@ -7,6 +7,11 @@ namespace EasyAuth.Storage
 {
     public class UserStoreContext : DbContext
     {
+        public UserStoreContext()
+            : base("DefaultConnection")
+        {
+        }
+
         public UserStoreContext(string connectionString = "DefaultConnection")
             : base(connectionString)
         {

@@ -16,8 +16,7 @@ namespace EasyAuth.Tests
         public void TestInitialize()
         {
             userStore = EntityUserStore.Instance;
-            //userStore.UserStoreContext = new UserStoreContext();            
-            //userStore.SetContext(typeof(UserStoreContext));
+            //userStore.SetContext
         }
 
         [TestCleanup]

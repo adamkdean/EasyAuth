@@ -10,6 +10,7 @@ namespace EasyAuth.Storage
     /// </summary>
     public class EntityUserStore : IUserStore
     {
+        #region Singleton
         static EntityUserStore instance = null;
         static readonly object padlock = new object();
 
@@ -27,19 +28,14 @@ namespace EasyAuth.Storage
             }
         }
 
-        public static void Reset()
-        {
-            //
-        }
+        public static void Reset() { }
+        #endregion
 
-        public string ConnectionString { get; set; }
+        private Type contextType = typeof(UserStoreContext);
 
-        public string GetConnectionString()
+        public void SetContext(Type type)
         {
-            using (var context = new UserStoreContext(ConnectionString))
-            {
-                return context.Database.Connection.ConnectionString;
-            }
+            contextType = type;
         }
 
         public void AddUser(string username, string password)
@@ -48,7 +44,7 @@ namespace EasyAuth.Storage
             if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
             if(this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();
 
-            using (var context = new UserStoreContext(ConnectionString))
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
                 User userA = new User { Username = username, Password = password };
                 context.Users.Add(userA);
@@ -73,7 +69,7 @@ namespace EasyAuth.Storage
 
         public bool UserExistsById(int id)
         {
-            using (var context = new UserStoreContext(ConnectionString))
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
                 return context.Users.Any(x => x.UserId == id);
             }
@@ -83,7 +79,7 @@ namespace EasyAuth.Storage
         {
             if (username == null) throw new ArgumentNullException("username");
 
-            using (var context = new UserStoreContext(ConnectionString))
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
                 return context.Users.Any(x => x.Username == username);
             }
@@ -102,7 +98,7 @@ namespace EasyAuth.Storage
             if (username == null) throw new ArgumentNullException("username");
             if (!UserExistsByUsername(username)) throw new UserDoesNotExistException();
 
-            using (var context = new UserStoreContext(ConnectionString))
+            using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
                 return (User)context.Users.First(x => x.Username == username);
             }
@@ -112,7 +108,7 @@ namespace EasyAuth.Storage
         {
             throw new NotImplementedException();
 
-            /*using (var context = new UserStoreContext())
+            /*using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
                 return List<User>context.Users;
             }*/
