@@ -49,7 +49,9 @@ Of course you can use other connection strings, as long as they're valid.
 
 ### HomeController.cs
 
-Now you create a controller as you would with any regular MVC application, but instead of using `[Authorize]` and `[AllowAnonymous]` you simply use `[EzAuthorize]` and `[EzAllowAnonymous]`, like so:
+Now you create a controller as you would with any regular MVC application, but instead of using the `[Authorize]` and `[AllowAnonymous]` attributes, you simply use `[EzAuthorize]` and `[EzAllowAnonymous]` instead.
+
+Authenticate a user with `Authentication.Login(username, password)`, and log them out with `Authentication.Logout();`.
 
     namespace EasyAuthExample.Controllers
     {
