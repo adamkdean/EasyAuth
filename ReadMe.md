@@ -1,4 +1,5 @@
 # EasyAuth 
+
 EasyAuth is a simple, secure, and easy to use lightweight alternative to ASP.NET Membership.
 
 ## Features
@@ -57,7 +58,7 @@ Now you create a controller as you would with any regular MVC application, but i
         {
             //
             // GET: /Home/
-
+            
             [EzAllowAnonymous]
             public ActionResult Index()
             {            
@@ -65,14 +66,48 @@ Now you create a controller as you would with any regular MVC application, but i
             }
 
             //
-            // GET: /Home/MembersOnly
+            // GET: /Home/Login
+            
+            [EzAllowAnonymous]
+            public ActionResult Login()
+            {            
+                return View();
+            }
+            
+            //
+            // POST: /Home/Login
+            
+            [HttpPost]
+            [EzAllowAnonymous]
+            public ActionResult Login(LoginModel model)
+            {
+                if (ModelState.IsValid && Authentication.Login(model.Username, model.Password))
+                {
+                    return RedirectToAction("MembersOnly", "Home");
+                }
+            
+                ViewBag.Message = "Invalid user credentials";
+                return View(model);
+            }
+            
+            //
+            // GET: /Home/Logout
+            
+            public ActionResult Logout()
+            {
+                Authentication.Logout();
+                return RedirectToAction("Index", "Home");
+            }
 
+            //
+            // GET: /Home/MembersOnly
+            
             public ActionResult MembersOnly()
             {
                 return View();
             }
-        }
     }
+}
 
 And that's it!
 
