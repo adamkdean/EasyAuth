@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace EasyAuth.Security
 {
@@ -14,34 +15,27 @@ namespace EasyAuth.Security
             get { return hashAlgorithm.HashSize; }
         }
 
-        public override byte[] GetSalt()
+        public override string GetSalt()
         {
             return GetSalt(SaltLength);
         }
 
-        public override byte[] GetSalt(int length)
+        public override string GetSalt(int length)
         {
             var buffer = new byte[length];
             Random random = new Random(DateTime.Now.Millisecond);
             random.NextBytes(buffer);
-            return buffer;
+            return BitConverter.ToString(buffer).Replace("-", "").ToLowerInvariant();
         }
 
-        public override byte[] GetHash(byte[] data, byte[] salt)
+        public override string GetHash(string data, string salt)
         {
-            var combined = data.Concat(salt).ToArray();
-            var hash = hashAlgorithm.ComputeHash(combined);
+            var combined = string.Format("{0}{1}", data, salt);
+            var bytes = Encoding.UTF8.GetBytes(combined);
+            var hash = hashAlgorithm.ComputeHash(bytes);
             for (int i = 0; i < hashLoops - 1; i++)
-                hash = hashAlgorithm.ComputeHash(hash);            
-            return hash;
-        }
-
-        public override string GetHash(string data, byte[] salt)
-        {
-            var dataBytes = GetBytes(data);
-            var hashBytes = GetHash(dataBytes, salt);
-            var hashString = GetString(hashBytes);
-            return hashString;
+                hash = hashAlgorithm.ComputeHash(hash);
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace EasyAuth.WebApp
         protected void Application_Start()
         {
             Authentication.UserStore = UserStore;
+            //Authentication.HashProviderType = typeof(SHA512HashProvider);
 
             // ASP.NET Generated code
             AreaRegistration.RegisterAllAreas();

@@ -53,11 +53,10 @@ namespace EasyAuth.Storage
             {
                 var hashProvider = (HashProvider)Activator.CreateInstance(Authentication.HashProviderType);
 
-                var salt = hashProvider.GetSalt();
-                var saltstr = hashProvider.GetString(salt);
+                var salt = hashProvider.GetSalt();                
                 var hash = hashProvider.GetHash(password, salt);
 
-                User user = new User { Username = username, Hash = hash, Salt = saltstr };
+                User user = new User { Username = username, Hash = hash, Salt = salt };
                 context.Users.Add(user);
                 context.SaveChanges();
             }

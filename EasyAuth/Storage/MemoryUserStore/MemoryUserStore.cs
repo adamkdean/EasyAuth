@@ -41,12 +41,10 @@ namespace EasyAuth.Storage
             if (this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();
 
             var hashProvider = (HashProvider)Activator.CreateInstance(Authentication.HashProviderType);
-
             var salt = hashProvider.GetSalt();
-            var saltstr = hashProvider.GetString(salt);
             var hash = hashProvider.GetHash(password, salt);
 
-            User user = new User { UserId = users.Count, Username = username, Hash = hash,Salt = saltstr };
+            User user = new User { UserId = users.Count, Username = username, Hash = hash, Salt = salt };
             users.Add(user);
         }
 

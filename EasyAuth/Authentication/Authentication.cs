@@ -56,7 +56,7 @@ namespace EasyAuth
             else return false;
         }
 
-        public static bool Login(string username, string password)
+        public static bool Login(string username, string password) //, bool persist = false)
         {
             if (UserStore.UserExistsByUsername(username))
             {
@@ -91,19 +91,16 @@ namespace EasyAuth
         protected static string GetCookieHash(string hash, string salt, bool secure = false)
         {
             var hashProvider = (HashProvider)Activator.CreateInstance(hashProviderType);
-            var userSalt = hashProvider.GetBytes(salt);
             if (secure) hash = string.Format("{0}:{1}", hash, HttpContext.Request.UserHostAddress);
-
-            return hashProvider.GetHash(hash, userSalt);
+            return hashProvider.GetHash(hash, salt);
         }
 
         protected static void CreateCookie(string username, string hash)
         {
-            // if cookie already exists, replace it
-            //if (GetCookie() != null) ExpireCookie();
             HttpCookie cookie = new HttpCookie(COOKIE_NAME);
             cookie.Values.Add("name", username);
             cookie.Values.Add("hash", hash);
+            cookie.Expires = DateTime.Now.AddDays(28); //TODO: Persist feature
             HttpContext.Response.Cookies.Add(cookie);
         }
 
@@ -117,11 +114,9 @@ namespace EasyAuth
 
         protected static void ExpireCookie()
         {
-            HttpCookie cookie = GetCookie();
-            if (cookie != null)
-            {
-                cookie.Expires.AddDays(-1);
-            }
+            HttpCookie cookie = new HttpCookie(COOKIE_NAME);
+            cookie.Expires = DateTime.Now.AddDays(-1);
+            HttpContext.Response.Cookies.Add(cookie);
         }
     }
 }

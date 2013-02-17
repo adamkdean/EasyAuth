@@ -1,10 +1,10 @@
-﻿using EasyAuth.WebApp.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EasyAuth.WebApp.Models;
 
 namespace EasyAuth.WebApp.Controllers
 {
@@ -53,7 +53,7 @@ namespace EasyAuth.WebApp.Controllers
                 return RedirectToAction("MembersOnly", "Home");
             }
 
-            ViewBag.Message = "Invalid user credentials";
+            ViewBag.Message = string.Format("Invalid user credentials ({0}, {1})", model.Username, model.Password);
             return View(model);
         }
 
