@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EasyAuth.Helpers;
 using EntityFramework.Extensions;
+using EasyAuth.Security;
+using System.ComponentModel;
 
 /* We only want the Tests to be able to call IUserStore.Reset() */
 [assembly: InternalsVisibleTo("EasyAuth.Tests")]
@@ -11,7 +13,7 @@ using EntityFramework.Extensions;
 namespace EasyAuth.Storage
 {
     /// <summary>
-    /// Stores users in a database using SQL.    
+    /// Stores users in a database using Entity.    
     /// </summary>
     public class EntityUserStore : IUserStore
     {
@@ -35,21 +37,27 @@ namespace EasyAuth.Storage
         #endregion
 
         private Type contextType = typeof(UserStoreContext);
-
-        public void SetContext(Type type)
+        public Type ContextType
         {
-            contextType = type;
+            get { return contextType; }
+            set { contextType = value; }
         }
-
+        
         public void AddUser(string username, string password)
         {
             if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
             if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
-            if(this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();
+            if (this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();
 
             using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
-                User user = new User { Username = username, Password = password };
+                var hashProvider = (HashProvider)Activator.CreateInstance(Authentication.HashProviderType);
+
+                var salt = hashProvider.GetSalt();
+                var saltstr = hashProvider.GetString(salt);
+                var hash = hashProvider.GetHash(password, salt);
+
+                User user = new User { Username = username, Hash = hash, Salt = saltstr };
                 context.Users.Add(user);
                 context.SaveChanges();
             }
@@ -64,8 +72,7 @@ namespace EasyAuth.Storage
             using (var context = (UserStoreContext)Activator.CreateInstance(contextType))
             {
                 User user = (User)context.Users.First(x => x.UserId == id);
-                user.Username = newUser.Username;
-                user.Password = newUser.Password;
+                CopyProperties(user, newUser);                
                 context.SaveChanges();
             }
         }
@@ -134,6 +141,14 @@ namespace EasyAuth.Storage
             {
                 context.Users.Delete();
                 context.SaveChanges();
+            }
+        }
+
+        protected void CopyProperties(object dest, object src)
+        {
+            foreach (PropertyDescriptor item in TypeDescriptor.GetProperties(src))
+            {
+                item.SetValue(dest, item.GetValue(src));
             }
         }
     }

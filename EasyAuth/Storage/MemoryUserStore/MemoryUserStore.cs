@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using EasyAuth.Helpers;
 using System.Runtime.CompilerServices;
+using EasyAuth.Security;
 
 /* We only want the Tests to be able to call IUserStore.Reset() */
 [assembly: InternalsVisibleTo("EasyAuth.Tests")]
@@ -37,14 +38,15 @@ namespace EasyAuth.Storage
         {
             if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
             if (string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
-            if(this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();
+            if (this.UserExistsByUsername(username)) throw new UserAlreadyExistsException();
 
-            User user = new User
-            {
-                UserId = users.Count,
-                Username = username,
-                Password = password
-            };
+            var hashProvider = (HashProvider)Activator.CreateInstance(Authentication.HashProviderType);
+
+            var salt = hashProvider.GetSalt();
+            var saltstr = hashProvider.GetString(salt);
+            var hash = hashProvider.GetHash(password, salt);
+
+            User user = new User { UserId = users.Count, Username = username, Hash = hash,Salt = saltstr };
             users.Add(user);
         }
 

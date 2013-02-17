@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication.cs" />
+    <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="Exceptions\CannotUseWithinChildActionCacheException.cs" />
     <Compile Include="Exceptions\UserIdDoesNotMatchUserObjectIdException.cs" />
     <Compile Include="Exceptions\UserAlreadyExistsException.cs" />
@@ -61,6 +61,13 @@
     <Compile Include="Exceptions\UserDoesNotExistException.cs" />
     <Compile Include="Helpers\CreateType.cs" />
     <Compile Include="Helpers\GenericCopier.cs" />
+    <Compile Include="Security\HashProvider.cs" />
+    <Compile Include="Security\RIPEMD160HashProvider.cs" />
+    <Compile Include="Security\SHA1HashProvider.cs" />
+    <Compile Include="Security\SHA256HashProvider.cs" />
+    <Compile Include="Security\SHA256L100HashProvider.cs" />
+    <Compile Include="Security\SHA384HashProvider.cs" />
+    <Compile Include="Security\SHA512HashProvider.cs" />
     <Compile Include="Storage\EntityUserStore\UserStoreContext.cs" />
     <Compile Include="Storage\EntityUserStore\EntityUserStore.cs" />
     <Compile Include="Storage\RavenUserStore\RavenUserStore.cs" />
