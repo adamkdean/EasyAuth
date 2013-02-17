@@ -173,7 +173,7 @@ When you have to delete users, sad as it is, you can do that too.
 
 ## License
 
-Copyright (c) 2013, Adam K Dean, Lewis Ardern. All rights reserved.
+Copyright (c) 2013, Adam K Dean. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

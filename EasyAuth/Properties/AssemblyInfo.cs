@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EasyAuth")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("EasyAuth is a simple, secure, and easy to use lightweight alternative to ASP.NET Membership.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EasyAuth")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright © 2013 Adam K Dean")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
