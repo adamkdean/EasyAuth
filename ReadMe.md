@@ -4,13 +4,13 @@ EasyAuth is a simple, secure, and easy to use lightweight alternative to ASP.NET
 
 ## Features
 
-The EasyAuth library is simple to use, and comes with a some common data storage options built in, including code-first Entity, SQL and RavenDB.
-
-It is lightweight and does not come with a bunch of bloat-ware functions you'll never use.
+The EasyAuth library is simple to use, bloat-ware free alternative to ASP.NET membership. It comes with a some common data storage options built in, including code-first Entity. In time it will also support RavenDB, MongoDB, and more.
 
 ## Example
 
-This is how simple it is to use EasyAuth in an ASP.NET MVC4 web application:
+This is how simple it is to use EasyAuth in an ASP.NET MVC4 web application with Entity Framework.
+
+Note that it is possible to extend `EasyAuth.Storage.UserStoreContext` to enable your website to use the same database as `EntityUserStore`. TODO: Add how-to.
 
 ### global.asax
 
