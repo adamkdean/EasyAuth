@@ -25,7 +25,7 @@ namespace EasyAuth
         {
             HttpCookie cookie = GetCookie();
             if (cookie != null)
-            {                
+            {
                 string cookieName = cookie.Values["name"];
                 string cookieHash = cookie.Values["hash"];
 
@@ -86,6 +86,11 @@ namespace EasyAuth
         {
             CurrentUser = null;
             ExpireCookie();
+        }
+
+        public static string HashPassword(string password, string salt)
+        {
+            return GetCookieHash(password, salt, false);
         }
 
         protected static string GetCookieHash(string hash, string salt, bool secure = false)
