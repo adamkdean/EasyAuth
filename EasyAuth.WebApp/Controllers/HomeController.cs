@@ -105,7 +105,7 @@ namespace EasyAuth.WebApp.Controllers
                 {
                     continue;
                 }
-            }             
+            }
 
             ViewBag.Message = string.Format("User created, {0} : {1}", username, password);
             return View();

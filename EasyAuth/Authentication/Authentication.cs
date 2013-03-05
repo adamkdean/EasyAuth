@@ -8,10 +8,23 @@ namespace EasyAuth
     public class Authentication
     {
         private const string COOKIE_NAME = "EasyAuthCookie";
+        private const string SESSION_NAME = "EasyAuthSession";
 
         public static bool LockCookieToIP { get; set; }
-        public static User CurrentUser { get; private set; } 
-        public static IUserStore UserStore { get; set; }                       
+        public static User CurrentUser
+        {
+            get
+            {
+                if (HttpContext.Current.Session[SESSION_NAME] != null)
+                    return (User)HttpContext.Current.Session[SESSION_NAME];
+                else return null;
+            }
+            private set
+            {
+                HttpContext.Current.Session[SESSION_NAME] = value;
+            }
+        }
+        public static IUserStore UserStore { get; set; }
         public static HttpContext HttpContext { get; set; }
 
         private static Type hashProviderType = typeof(SHA256HashProvider);
@@ -110,7 +123,7 @@ namespace EasyAuth
         }
 
         protected static HttpCookie GetCookie()
-        {
+        {            
             var cookies = HttpContext.Current.Request.Cookies;
             if (cookies.AllKeys.Any(x => x == COOKIE_NAME))
                 return cookies[COOKIE_NAME];
