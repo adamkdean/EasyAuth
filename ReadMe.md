@@ -2,11 +2,9 @@
 
 EasyAuth is a simple, secure, and easy to use lightweight alternative to ASP.NET Membership.
 
-## Features
+At the moment it supports Code-First Entity Framework as a data model, and will in time also support RavenDB and more.
 
-The EasyAuth library is simple to use, bloat-ware free alternative to ASP.NET membership. It comes with a some common data storage options built in, including code-first Entity. In time it will also support RavenDB, MongoDB, and more.
-
-## Install
+## Install via NuGet
 
 EasyAuth is available as a NuGet package.  
 
@@ -14,7 +12,7 @@ To install EasyAuth, run the following command in the Package Manager Console
 
     PM> Install-Package EasyAuth
 
-## Example
+## Examples
 
 This is how simple it is to use EasyAuth in an ASP.NET MVC4 web application with Entity Framework.
 
