@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("EasyAuth")]
 [assembly: AssemblyDescription("EasyAuth is a simple, secure, and easy to use lightweight alternative to ASP.NET Membership.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Adam K Dean")]
 [assembly: AssemblyProduct("EasyAuth")]
 [assembly: AssemblyCopyright("Copyright © 2013 Adam K Dean")]
 [assembly: AssemblyTrademark("")]

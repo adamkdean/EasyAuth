@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/Imdsm/EasyAuth/blob/master/LICENCE</licenseUrl>
+    <projectUrl>https://github.com/Imdsm/EasyAuth</projectUrl>
+    <iconUrl>http://i.imgur.com/XCL8ZAH.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>See GitHub for more info.</releaseNotes>
+    <copyright>Copyright 2013 Adam K Dean</copyright>
+    <tags>EasyAuth Authentication</tags>
+  </metadata>
+</package>
