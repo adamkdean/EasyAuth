@@ -6,11 +6,21 @@ EasyAuth is a simple, secure, and easy to use lightweight alternative to ASP.NET
 
 The EasyAuth library is simple to use, bloat-ware free alternative to ASP.NET membership. It comes with a some common data storage options built in, including code-first Entity. In time it will also support RavenDB, MongoDB, and more.
 
+## Install
+
+EasyAuth is available as a NuGet package.  
+
+To install EasyAuth, run the following command in the Package Manager Console
+
+    PM> Install-Package EasyAuth
+
 ## Example
 
 This is how simple it is to use EasyAuth in an ASP.NET MVC4 web application with Entity Framework.
 
-Note that it is possible to extend `EasyAuth.Storage.UserStoreContext` to enable your website to use the same database as `EntityUserStore`. TODO: Add how-to.
+Note that it is possible to extend `EasyAuth.Storage.UserStoreContext` to enable your website to use the same database as `EntityUserStore`. 
+
+TODO: Add how-to on extending `UserStoreContext`.
 
 ### global.asax
 
@@ -45,7 +55,7 @@ Make sure you remember to put the ConnectionString in for your selected data sto
             connectionString="Data Source=(LocalDb)\v11.0;Initial Catalog=EasyAuthExample;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\EasyAuthExample.mdf" />
     </connectionStrings>
 
-Of course you can use other connection strings, as long as they're valid.
+Of course you can use other connection strings/data sources, as long as they're valid.
 
 ### HomeController.cs
 
@@ -170,3 +180,7 @@ When you have to delete users, sad as it is, you can do that too.
 
     User test = Authentication.UserStore.GetUserByUsername("TestUser");
     Authentication.UserStore.DeleteUserById(test.UserId);
+
+## Licence
+
+Please see the `LICENCE` file.
