@@ -4,8 +4,8 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <authors>Adam K Dean</authors>
+    <owners>Adam K Dean</owners>
     <licenseUrl>https://github.com/Imdsm/EasyAuth/blob/master/LICENCE</licenseUrl>
     <projectUrl>https://github.com/Imdsm/EasyAuth</projectUrl>
     <iconUrl>http://i.imgur.com/XCL8ZAH.png</iconUrl>
@@ -13,6 +13,6 @@
     <description>$description$</description>
     <releaseNotes>See GitHub for more info.</releaseNotes>
     <copyright>Copyright 2013 Adam K Dean</copyright>
-    <tags>EasyAuth Authentication</tags>
+    <tags>EasyAuth</tags>
   </metadata>
 </package>
