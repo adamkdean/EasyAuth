@@ -36,6 +36,7 @@
     <Reference Include="EntityFramework.Extended">
       <HintPath>..\packages\EntityFramework.Extended.5.0.0.68\lib\net45\EntityFramework.Extended.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -70,11 +71,12 @@
     <Compile Include="Security\SHA512HashProvider.cs" />
     <Compile Include="Storage\EntityUserStore\UserStoreContext.cs" />
     <Compile Include="Storage\EntityUserStore\EntityUserStore.cs" />
-    <Compile Include="Storage\RavenUserStore\RavenUserStore.cs" />
     <Compile Include="Storage\IUserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\MemoryUserStore\MemoryUserStore.cs" />
     <Compile Include="Storage\User.cs" />
+    <Compile Include="Tests\EntityUserStoreTests.cs" />
+    <Compile Include="Tests\MemoryUserStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
