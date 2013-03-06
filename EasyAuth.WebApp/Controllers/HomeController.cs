@@ -48,7 +48,7 @@ namespace EasyAuth.WebApp.Controllers
         [EzAllowAnonymous]
         public ActionResult Login(LoginModel model)
         {
-            if (ModelState.IsValid && Authentication.Login(model.Username, model.Password))
+            if (ModelState.IsValid && Authentication.Login(model.Username, model.Password, model.Persist))
             {
                 return RedirectToAction("MembersOnly", "Home");
             }

@@ -21,6 +21,10 @@
     @Html.PasswordFor(m => m.Password)
     @Html.ValidationMessageFor(m => m.Password)
     <br />
+    @Html.LabelFor(m => m.Persist)
+    @Html.CheckBoxFor(m => m.Persist)
+    @Html.ValidationMessageFor(m => m.Persist)
+    <br />    
     <input type="submit" value="Login" />
 }
 

@@ -34,64 +34,37 @@ namespace EasyAuth
             set { hashProviderType = value; }
         }
 
-        public static bool Authenticate()
-        {
-            HttpCookie cookie = GetCookie();
-            if (cookie != null)
-            {
-                string cookieName = cookie.Values["name"];
-                string cookieHash = cookie.Values["hash"];
-
-                if (UserStore.UserExistsByUsername(cookieName))
-                {
-                    User user = UserStore.GetUserByUsername(cookieName);
-
-                    var userHash = user.Hash;
-                    if (LockCookieToIP) userHash = GetCookieHash(userHash, user.Salt, true);
-
-                    if (userHash == cookieHash)
-                    {
-                        CurrentUser = user;
-                        return true;
-                    }
-                }
-
-                CurrentUser = null;
-                ExpireCookie();
-            }
-            
-            return false;
-        }
-
         public static bool IsAuthenticated()
         {
             if (CurrentUser != null) return true;
-            else return false;
+
+            var cookie = GetCookie();
+            if (cookie != null)
+            {
+                var cookieName = cookie.Values["name"];
+                var cookieHash = cookie.Values["hash"];
+
+                return Authenticate(cookieName, cookieHash);
+            }
+
+            return false;
         }
 
-        public static bool Login(string username, string password) //, bool persist = false)
+        public static bool Login(string username, string password)
+        {
+            return Login(username, password, persist: false);
+        }
+
+        public static bool Login(string username, string password, bool persist, int length = 28)
         {
             if (UserStore.UserExistsByUsername(username))
             {
-                User user = UserStore.GetUserByUsername(username);
+                var user = UserStore.GetUserByUsername(username);
+                var suppliedHash = HashPassword(password, user.Salt);
 
-                var userHash = user.Hash;
-                var passwordHash = GetCookieHash(password, user.Salt, false);
-                if (LockCookieToIP)
-                {
-                    userHash = GetCookieHash(userHash, user.Salt, true);
-                    passwordHash = GetCookieHash(passwordHash, user.Salt, true);
-                }
-
-                if (userHash == passwordHash)
-                {
-                    CreateCookie(user.Username, userHash);
-                    CurrentUser = user;
-                    return true;
-                }
+                return Authenticate(username, suppliedHash, persist, length);
             }
-
-            CurrentUser = null;
+            
             return false;
         }
 
@@ -101,24 +74,52 @@ namespace EasyAuth
             ExpireCookie();
         }
 
-        public static string HashPassword(string password, string salt)
-        {
-            return GetCookieHash(password, salt, false);
-        }
-
-        protected static string GetCookieHash(string hash, string salt, bool secure = false)
+        public static string HashPassword(string password, string salt, bool secure = false)
         {
             var hashProvider = (HashProvider)Activator.CreateInstance(hashProviderType);
-            if (secure) hash = string.Format("{0}:{1}", hash, HttpContext.Request.UserHostAddress);
-            return hashProvider.GetHash(hash, salt);
+            if (secure) password = string.Format("{0}:{1}", password, HttpContext.Request.UserHostAddress);
+            return hashProvider.GetHash(password, salt);
         }
 
-        protected static void CreateCookie(string username, string hash)
+        protected static bool Authenticate(string username, string hash)
         {
-            HttpCookie cookie = new HttpCookie(COOKIE_NAME);
+            return Authenticate(username, hash, persist: false);
+        }
+
+        protected static bool Authenticate(string username, string hash, bool persist, int length = 28)
+        {
+            if (UserStore.UserExistsByUsername(username))
+            {
+                var user = UserStore.GetUserByUsername(username);
+                var existingHash = user.Hash;
+                var suppliedHash = hash;
+                
+                // if we want sessions/cookies locked to IP then we need to hash the hashes again with the IP
+                // example: ThisIsAHash -> 127.0.0.1:ThisIsAHash -> NewUniqueHash etc
+                if (LockCookieToIP)
+                {
+                    existingHash = HashPassword(existingHash, user.Salt, secure: true);
+                    suppliedHash = HashPassword(suppliedHash, user.Salt, secure: true);
+                }
+
+                if (existingHash == suppliedHash)
+                {
+                    if (persist) CreateCookie(user.Username, existingHash);
+                    CurrentUser = user;
+                    return true;
+                }
+            }
+
+            CurrentUser = null;
+            return false;
+        }
+        
+        protected static void CreateCookie(string username, string hash, int days = 28)
+        {
+            var cookie = new HttpCookie(COOKIE_NAME);
             cookie.Values.Add("name", username);
             cookie.Values.Add("hash", hash);
-            cookie.Expires = DateTime.Now.AddDays(28); //TODO: Persist feature
+            cookie.Expires = DateTime.Now.AddDays(days);
             HttpContext.Response.Cookies.Add(cookie);
         }
 
@@ -132,7 +133,7 @@ namespace EasyAuth
 
         protected static void ExpireCookie()
         {
-            HttpCookie cookie = new HttpCookie(COOKIE_NAME);
+            var cookie = new HttpCookie(COOKIE_NAME);
             cookie.Expires = DateTime.Now.AddDays(-1);
             HttpContext.Response.Cookies.Add(cookie);
         }

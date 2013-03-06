@@ -38,8 +38,8 @@ namespace EasyAuth
             if (OutputCacheAttribute.IsChildActionCacheActive(filterContext))
                 throw new CannotUseWithinChildActionCache();
 
-            bool skipAuthorization = filterContext.ActionDescriptor.IsDefined(typeof(EzAllowAnonymousAttribute), inherit: true)
-                                     || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(EzAllowAnonymousAttribute), inherit: true);
+            bool skipAuthorization = filterContext.ActionDescriptor.IsDefined(typeof(EzAllowAnonymousAttribute), inherit: true) || 
+                                     filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(EzAllowAnonymousAttribute), inherit: true);
 
             if (skipAuthorization) return;
 
